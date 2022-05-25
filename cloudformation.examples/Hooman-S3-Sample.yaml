@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  Example for S3-Bucket with CloudFormation. 
+  Hooman
+
+Parameters:
+  S3BucketName:
+    Description: S3 Bucket Name
+    Type: String
+
+  Versioning:
+    Description: S3 Bucket Versioning
+    Type: String
+    Default: Suspended
+    AllowedValues:
+      - Suspended
+      - Enabled
+
+
+Resources:
+  S3BucketWithCfn:
+    Type: AWS::S3::Bucket
+    Properties: 
+      AccessControl: Private
+      BucketName: !Ref S3BucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true 
+      VersioningConfiguration:
+        Status: !Ref Versioning
+      Tags:
+        - Key: Hooman
+          Value: Hallo CloudFormation
+  S3BucketWithCfnPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref S3BucketWithCfn
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: !Join ['-', [!Ref S3BucketName, "S3","with","CFN"]]
+            Action:
+              - 's3:GetObject'
+              - 's3:ListBucket'
+              - 's3:PutObject'
+            Effect: Allow
+            Resource:
+              - !Sub arn:aws:s3:::${S3BucketWithCfn}
+              - !Sub arn:aws:s3:::${S3BucketWithCfn}/*
+            Principal:
+              AWS: 
+                - 'arn:aws:iam::006044462692:user/hooman-admin'
+
+Outputs:
+  BucketName:
+    Description: Name of S3 bucket
+    Value: !Ref S3BucketWithCfn
+    Export:
+      Name: CreatedS3BucketWithCfn 
+      # Refrence the output, using the Fn::ImportValue functio
+      # -> !ImportValue CreatedS3BucketWithCfn
