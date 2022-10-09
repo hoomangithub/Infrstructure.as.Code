@@ -1,16 +1,13 @@
-from email import policy
 from aws_cdk import (
-    RemovalPolicy,
     Stack,
-    CfnOutput,
     aws_ssm as _ssm,
-    aws_secretsmanager as _secretsmanager
+    aws_secretsmanager as _secretsmanager,
+    RemovalPolicy,
+    CfnOutput    
 )
 from constructs import Construct
+
 import json
-
-from jsii import data_type
-
 
 class CustomParametersSecretsStack(Stack):
 
@@ -31,7 +28,7 @@ class CustomParametersSecretsStack(Stack):
             "parameter2",
             description="Load Testing Configuration",
             parameter_name="/locust/configs/NoOfConcurrentUsers",
-            string_value="100",
+            string_value="200",
             tier=_ssm.ParameterTier.STANDARD
         )
         param3 = _ssm.StringParameter(
