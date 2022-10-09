@@ -2,10 +2,10 @@
 
 import aws_cdk as cdk
 
-from cdk.python.example.cdk.python.example_stack import CdkPythonExampleStack
+from resource_stacks.CustomParametersSecretsStack import CustomParametersSecretsStack
 
 
 app = cdk.App()
-CdkPythonExampleStack(app, "cdk-python-example")
+CustomParametersSecretsStack(app, "cdk-python-example")
 
 app.synth()
