@@ -3,10 +3,12 @@
 import aws_cdk as cdk
 
 from resource_stacks.CustomParametersSecretsStack import CustomParametersSecretsStack
-from resource_stacks.CustomIamUsersGroups import CustomIamUsersGroupsStack
+from resource_stacks.CustomS3ResourcePolicy import CustomIamUsersGroupsStack
 
 app = cdk.App()
-CustomParametersSecretsStack(app, "hooman-parameters-and-secrets")
+# CustomParametersSecretsStack(app, "hooman-parameters-and-secrets")
 CustomIamUsersGroupsStack(app, "hooman-iam-user-and-group")
+
+
 
 app.synth()
