@@ -9,7 +9,7 @@ from resource_stacks.CustomS3ResourcePolicy import CustomS3ResourcePolicyStack
 app = cdk.App()
 # CustomParametersSecretsStack(app, "hooman-parameters-and-secrets")
 # CustomIamUsersGroupsStack(app, "hooman-iam-user-and-group")
-CustomS3ResourcePolicyStack(app, "hooman-s3-resource-policy")
+#CustomS3ResourcePolicyStack(app, "hooman-s3-resource-policy")
 
 
 app.synth()

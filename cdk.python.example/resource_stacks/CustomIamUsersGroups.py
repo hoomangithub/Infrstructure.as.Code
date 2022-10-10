@@ -86,6 +86,17 @@ class CustomIamUsersGroupsStack(Stack):
             self,
             'konstoneOpsRole',
             assumed_by=_iam.AccountPrincipal(f"{Aws.ACCOUNT_ID}"),
+            # '_iam.AccountPrincipal' add Trust relationships:
+            # { "Version": "2012-10-17",
+            #   "Statement": [{
+            #      "Effect": "Allow",
+            #      "Principal": {
+            #          "AWS": "arn:aws:iam::006044462692:root"
+            #      },
+            #      "Action": "sts:AssumeRole"
+            #   }]
+            # }
+            #
             role_name="konstone_ops_role"
         )
 
