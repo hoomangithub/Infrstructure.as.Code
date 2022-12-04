@@ -42,6 +42,7 @@ class CustomRdsDatabaseStack(Stack):
                 _ec2.InstanceSize.MICRO
             ),
             credentials=_rds.Credentials.from_secret(db_secret, username="username"),
+            publicly_accessible=True,
             vpc=default_vpc,
             vpc_subnets=_ec2.SubnetSelection(subnet_type=_ec2.SubnetType.PUBLIC),
             port=5432,
