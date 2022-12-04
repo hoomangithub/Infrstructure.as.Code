@@ -35,6 +35,15 @@
     "@aws-cdk/core:target-partitions": [
       "aws",
       "aws-cn"
-    ]
+    ],
+    "envs": {
+        "region": "eu-central-1",
+        "account": "006044462692"
+    },
+    "vpc_configs": {
+      "vpc_cidr": "10.83.0.0/20",
+      "cidr_mask": 24,
+      "set_reserve": false
+    }
   }
 }

@@ -17,8 +17,8 @@ class CustomS3ResourcePolicyStack(Stack):
             "hooman-s3.resource-policy",
             bucket_name="hoomans3resourcepolicy",
             versioned=False,
-            encryption=_s3.BucketEncryption.S3_MANAGED,
-            block_public_access=_s3.BlockPublicAccess.BLOCK_ALL,            
+            # encryption=_s3.BucketEncryption.S3_MANAGED,
+            # block_public_access=_s3.BlockPublicAccess.BLOCK_ALL,            
             removal_policy=RemovalPolicy.DESTROY
         )
         

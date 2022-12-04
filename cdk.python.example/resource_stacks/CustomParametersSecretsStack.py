@@ -27,7 +27,7 @@ class CustomParametersSecretsStack(Stack):
             self,
             "parameter2",
             description="Load Testing Configuration",
-            parameter_name="/locust/configs/NoOfConcurrentUsers",
+            parameter_name="/hooman/configs/NoOfConcurrentUsers",
             string_value="200",
             tier=_ssm.ParameterTier.STANDARD
         )
@@ -35,7 +35,7 @@ class CustomParametersSecretsStack(Stack):
             self,
             "parameter3",
             description="Load Testing Configuration",
-            parameter_name="/locust/configs/DurationInSec",
+            parameter_name="/hooman/configs/DurationInSec",
             string_value="300",
             tier=_ssm.ParameterTier.STANDARD
         )
@@ -52,10 +52,10 @@ class CustomParametersSecretsStack(Stack):
             self,
             "secret2",
             description="A Templated secret for user data",
-            secret_name="user_kon_attributes",
+            secret_name="user_hooman_attributes",
             generate_secret_string=_secretsmanager.SecretStringGenerator(
                 secret_string_template=json.dumps(
-                    {"username": "kon"}
+                    {"username": "hooman"}
                 ),
                 generate_string_key="password"
             ),
