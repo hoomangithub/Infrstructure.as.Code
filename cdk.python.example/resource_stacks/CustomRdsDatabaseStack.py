@@ -22,26 +22,29 @@ class CustomRdsDatabaseStack(Stack):
         postgresql_SG.add_ingress_rule(peer=_ec2.Peer.any_ipv4(), connection=_ec2.Port.tcp(5432), description="allow Postgresql traffic from anywhere")
         #################################################
         # Templated secret with username and password fields
-        db_secret = _ssm.Secret(self, "DBSecret",
-                    generate_secret_string=_ssm.SecretStringGenerator(
-                        secret_string_template=json.dumps({"username": "hooman"}),
-                        generate_string_key="password",
-                        password_length=16,
-                        exclude_punctuation=True
-                    )
+        db_secret_templated = _ssm.Secret(self, "DBSecret",
+            generate_secret_string=_ssm.SecretStringGenerator(
+                secret_string_template=json.dumps({'username': "hooman"}),
+                generate_string_key="password",
+                password_length=16,
+                exclude_characters="@{}[]()'\"/\\"
+            )
         )
+        # Running Serverless Applications in the Cloud – A Tutorial:
+        # https://haseebkamal.com/running-serverless-applications-in-the-cloud/
         #################################################                
         # Create an RDS Database
         konstone_db = _rds.DatabaseInstance(
             self, "HoomanPostgreSQL",
-            instance_identifier="Hooman-RDS-CDK",
-            database_name="konstone_db",
-            engine=_rds.DatabaseInstanceEngine.postgres(version=_rds.PostgresEngineVersion.VER_13_7),
+            instance_identifier="HoomanRDSCDK",
+            database_name="hoomanDB",
+            engine=_rds.DatabaseInstanceEngine.postgres(version=_rds.PostgresEngineVersion.VER_14_3),
             instance_type=_ec2.InstanceType.of(
                 _ec2.InstanceClass.T3,
                 _ec2.InstanceSize.MICRO
             ),
-            credentials=_rds.Credentials.from_secret(db_secret, username="username"),
+            # Using the templated secret as credentials
+            credentials=_rds.Credentials.from_secret(db_secret_templated),
             publicly_accessible=True,
             vpc=default_vpc,
             vpc_subnets=_ec2.SubnetSelection(subnet_type=_ec2.SubnetType.PUBLIC),
