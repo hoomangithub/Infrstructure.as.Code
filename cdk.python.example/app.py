@@ -12,7 +12,9 @@ from aws_cdk import (
 # from resource_stacks.CustomVPC3TierStack import CustomVPC3TierStack
 # from resource_stacks.CustomSimpleEc2Stack import CustomSimpleEc2Stack
 
-from resource_stacks.CustomRdsDatabaseStack import CustomRdsDatabaseStack
+# from resource_stacks.CustomRdsDatabaseStack import CustomRdsDatabaseStack
+
+from resource_stacks.CustomSNSandSQS import CustomSNSandSQS
 
 app = cdk.App()
 
@@ -25,6 +27,8 @@ env_configs = Environment(account=app.node.try_get_context('envs')['account'], r
 # CustomVPC3TierStack(app, "hooman-customVpc", env=env_configs)
 # CustomSimpleEc2Stack(app, "simpleEc2", env=env_configs)
 
-CustomRdsDatabaseStack(app, "RDS-POSTGRES", env=env_configs)
+# CustomRdsDatabaseStack(app, "RDS-POSTGRES", env=env_configs)
+
+CustomSNSandSQS(app, "SNS-SQS", env=env_configs)
 
 app.synth()

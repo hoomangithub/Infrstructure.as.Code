@@ -34,7 +34,7 @@ class CustomRdsDatabaseStack(Stack):
         # https://haseebkamal.com/running-serverless-applications-in-the-cloud/
         #################################################                
         # Create an RDS Database
-        konstone_db = _rds.DatabaseInstance(
+        hooman_db = _rds.DatabaseInstance(
             self, "HoomanPostgreSQL",
             instance_identifier="HoomanRDSCDK",
             database_name="hoomanDB",
