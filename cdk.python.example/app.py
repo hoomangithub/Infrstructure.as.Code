@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 import aws_cdk as cdk
-from aws_cdk import (
-    Environment
-)
+from aws_cdk import Environment
 
 # from resource_stacks.CustomIamUsersGroups import CustomIamUsersGroupsStack
 # from resource_stacks.CustomS3ResourcePolicy import CustomS3ResourcePolicyStack
@@ -14,7 +12,10 @@ from aws_cdk import (
 
 # from resource_stacks.CustomRdsDatabaseStack import CustomRdsDatabaseStack
 
-from resource_stacks.CustomSNSandSQS import CustomSNSandSQS
+# from resource_stacks.CustomSNSandSQS import CustomSNSandSQS
+
+from serverless_stacks.CustomLambdaStack import CustomLambdaStack
+from serverless_stacks.CustomDynamoDBStack import CustomDynamoDBStack
 
 app = cdk.App()
 
@@ -29,6 +30,9 @@ env_configs = Environment(account=app.node.try_get_context('envs')['account'], r
 
 # CustomRdsDatabaseStack(app, "RDS-POSTGRES", env=env_configs)
 
-CustomSNSandSQS(app, "SNS-SQS", env=env_configs)
+# CustomSNSandSQS(app, "SNS-SQS", env=env_configs)
+
+CustomLambdaStack(app, "SimpleLambda", description="Simple Lambda Create Lambda Source Assets")
+CustomDynamoDBStack(app, "MoviesDynamoDB", description="DynamoDB: Key-Value Database")
 
 app.synth()
