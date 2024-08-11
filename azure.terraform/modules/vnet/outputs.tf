@@ -30,3 +30,10 @@ output "app_subnet_nsg_id" {
   value = azurerm_network_security_group.app_subnet_nsg.id
 }
 
+output "network_interface_id" {
+  value = azurerm_network_interface.myvmnic.id
+}
+
+output "security_group_id" {
+  value = azurerm_network_security_group.app_subnet_nsg.id
+}

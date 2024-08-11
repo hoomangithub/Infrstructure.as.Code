@@ -16,15 +16,6 @@ resource "azurerm_network_security_group" "app_subnet_nsg" {
   ]
 }
 
-resource "azurerm_subnet_network_security_group_association" "app_subnet_nsg_associate" {
-  subnet_id                 = azurerm_subnet.mysubnet.id
-  network_security_group_id = azurerm_network_security_group.app_subnet_nsg.id
-  depends_on = [
-    azurerm_network_security_group.app_subnet_nsg,
-    azurerm_subnet.mysubnet
-  ]
-}
-
 resource "azurerm_network_security_rule" "app_nsg_rule_inbound" {
   for_each                    = local.app_inbound_ports_map
   name                        = "Rule-Port-${each.value}"
@@ -60,5 +51,14 @@ resource "azurerm_network_security_rule" "app_nsg_rule_inbound_port_22" {
     azurerm_resource_group.my-terraform-rg,
     azurerm_network_security_group.app_subnet_nsg,
     azurerm_network_security_rule.app_nsg_rule_inbound
+  ]
+}
+
+resource "azurerm_subnet_network_security_group_association" "app_subnet_nsg_associate" {
+  subnet_id                 = azurerm_subnet.mysubnet.id
+  network_security_group_id = azurerm_network_security_group.app_subnet_nsg.id
+  depends_on = [
+    azurerm_network_security_group.app_subnet_nsg,
+    azurerm_subnet.mysubnet
   ]
 }
